@@ -1,0 +1,9 @@
+venv/
+__pycache__/
+*.pyc
+blog.db
+.env
+media/*
+!media/.gitkeep
+media/invoices/*
+!media/invoices/.gitkeep
