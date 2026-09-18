@@ -7,7 +7,10 @@ from .. import models, schemas
 from ..database import get_db
 from ..deps import get_current_user
 from ..email_utils import send_email_notification
+<<<<<<< HEAD
 from ..plan_limits import enforce_comment_limit
+=======
+>>>>>>> origin/main
 
 router = APIRouter(prefix="/posts", tags=["Comments"])
 
@@ -29,8 +32,11 @@ def add_comment(
     if not post:
         raise HTTPException(status_code=404, detail="Post not found")
 
+<<<<<<< HEAD
     enforce_comment_limit(db, current_user)
 
+=======
+>>>>>>> origin/main
     comment = models.Comment(
         post_id=post_id, user_id=current_user.id, text=comment_in.text
     )

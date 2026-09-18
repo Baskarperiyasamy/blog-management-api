@@ -1,15 +1,23 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
+<<<<<<< HEAD
 from .database import Base, engine, SessionLocal
 from . import models  # noqa: F401  (ensures models are registered before create_all)
 from .media_utils import ensure_media_dirs
 from .invoice_utils import ensure_invoice_dir
 from .routers import auth, posts, comments, likes, subscriptions
+=======
+from .database import Base, engine
+from . import models  # noqa: F401  (ensures models are registered before create_all)
+from .media_utils import ensure_media_dirs
+from .routers import auth, posts, comments, likes
+>>>>>>> origin/main
 
 # Creates blog.db and all tables automatically on first run.
 Base.metadata.create_all(bind=engine)
 
+<<<<<<< HEAD
 # Creates media/posts/ and media/invoices/ so uploads/invoices have somewhere to land.
 ensure_media_dirs()
 ensure_invoice_dir()
@@ -46,12 +54,17 @@ def seed_subscription_plans() -> None:
 
 
 seed_subscription_plans()
+=======
+# Creates media/posts/ so uploaded images have somewhere to land.
+ensure_media_dirs()
+>>>>>>> origin/main
 
 app = FastAPI(
     title="Blog Management API",
     description=(
         "A mini blogging system: authenticated users can create/update/delete "
         "their own posts (with optional cover images), comment on posts, "
+<<<<<<< HEAD
         "like/unlike posts, paginate/search the post feed, trigger email "
         "notifications on new comments and likes, and subscribe to a "
         "Basic/Premium/Pro plan that gates how much of each feature they can use."
@@ -60,13 +73,25 @@ app = FastAPI(
 )
 
 # Serves uploaded images and invoice PDFs at http://<host>/media/...
+=======
+        "like/unlike posts, paginate/search the post feed, and trigger email "
+        "notifications on new comments and likes."
+    ),
+    version="2.0.0",
+)
+
+# Serves uploaded images at http://<host>/media/posts/<filename>
+>>>>>>> origin/main
 app.mount("/media", StaticFiles(directory="media"), name="media")
 
 app.include_router(auth.router)
 app.include_router(posts.router)
 app.include_router(comments.router)
 app.include_router(likes.router)
+<<<<<<< HEAD
 app.include_router(subscriptions.router)
+=======
+>>>>>>> origin/main
 
 
 @app.get("/", tags=["Health"])

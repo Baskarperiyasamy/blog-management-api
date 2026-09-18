@@ -8,6 +8,7 @@ comments and likes.
 
 ---
 
+<<<<<<< HEAD
 ## 🆕 v3.0 additions (subscription plans, access control & billing)
 
 > ⚠️ **Note on the task brief:** this task's wording mentions "Django Admin" /
@@ -69,6 +70,8 @@ adding an extra model. This is called out again inline as a comment in
 
 ---
 
+=======
+>>>>>>> origin/main
 ## 🆕 v2.0 additions (image upload + pagination/search)
 
 | Feature | Endpoint(s) |

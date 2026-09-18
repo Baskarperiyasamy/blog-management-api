@@ -5,7 +5,10 @@ from sqlalchemy import (
     Integer,
     String,
     Text,
+<<<<<<< HEAD
     Float,
+=======
+>>>>>>> origin/main
     ForeignKey,
     DateTime,
     UniqueConstraint,
@@ -22,7 +25,10 @@ class User(Base):
     username = Column(String(50), unique=True, index=True, nullable=False)
     email = Column(String(120), unique=True, index=True, nullable=False)
     password = Column(String(255), nullable=False)  # stores the HASHED password
+<<<<<<< HEAD
     plan_id = Column(Integer, ForeignKey("subscription_plans.id"), nullable=True)
+=======
+>>>>>>> origin/main
     created_at = Column(DateTime, default=datetime.utcnow)
 
     posts = relationship(
@@ -34,10 +40,13 @@ class User(Base):
     likes = relationship(
         "Like", back_populates="user", cascade="all, delete-orphan"
     )
+<<<<<<< HEAD
     plan = relationship("SubscriptionPlan", back_populates="users")
     billing_history = relationship(
         "BillingHistory", back_populates="user", cascade="all, delete-orphan"
     )
+=======
+>>>>>>> origin/main
 
 
 class Post(Base):
@@ -84,6 +93,7 @@ class Like(Base):
 
     post = relationship("Post", back_populates="likes")
     user = relationship("User", back_populates="likes")
+<<<<<<< HEAD
 
 
 class SubscriptionPlan(Base):
@@ -127,3 +137,5 @@ class BillingHistory(Base):
 
     user = relationship("User", back_populates="billing_history")
     plan = relationship("SubscriptionPlan", back_populates="billing_history")
+=======
+>>>>>>> origin/main

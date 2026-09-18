@@ -33,12 +33,15 @@ def register(user_in: schemas.UserCreate, db: Session = Depends(get_db)):
         email=user_in.email,
         password=hash_password(user_in.password),
     )
+<<<<<<< HEAD
 
     # Every user gets an active subscription from day one - defaults to Basic.
     basic_plan = db.query(models.SubscriptionPlan).filter(models.SubscriptionPlan.name == "basic").first()
     if basic_plan:
         user.plan_id = basic_plan.id
 
+=======
+>>>>>>> origin/main
     db.add(user)
     db.commit()
     db.refresh(user)
