@@ -5,5 +5,13 @@ blog.db
 .env
 media/*
 !media/.gitkeep
+<<<<<<< HEAD
 media/invoices/*
 !media/invoices/.gitkeep
+=======
+<<<<<<< HEAD
+media/invoices/*
+!media/invoices/.gitkeep
+=======
+>>>>>>> origin/main
+>>>>>>> f4a61c9de3181091724c61d126cb113a3c69516f

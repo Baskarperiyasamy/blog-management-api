@@ -5,7 +5,14 @@ from sqlalchemy import (
     Integer,
     String,
     Text,
+<<<<<<< HEAD
     Float,
+=======
+<<<<<<< HEAD
+    Float,
+=======
+>>>>>>> origin/main
+>>>>>>> f4a61c9de3181091724c61d126cb113a3c69516f
     ForeignKey,
     DateTime,
     UniqueConstraint,
@@ -22,7 +29,14 @@ class User(Base):
     username = Column(String(50), unique=True, index=True, nullable=False)
     email = Column(String(120), unique=True, index=True, nullable=False)
     password = Column(String(255), nullable=False)  # stores the HASHED password
+<<<<<<< HEAD
     plan_id = Column(Integer, ForeignKey("subscription_plans.id"), nullable=True)
+=======
+<<<<<<< HEAD
+    plan_id = Column(Integer, ForeignKey("subscription_plans.id"), nullable=True)
+=======
+>>>>>>> origin/main
+>>>>>>> f4a61c9de3181091724c61d126cb113a3c69516f
     created_at = Column(DateTime, default=datetime.utcnow)
 
     posts = relationship(
@@ -34,10 +48,19 @@ class User(Base):
     likes = relationship(
         "Like", back_populates="user", cascade="all, delete-orphan"
     )
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> f4a61c9de3181091724c61d126cb113a3c69516f
     plan = relationship("SubscriptionPlan", back_populates="users")
     billing_history = relationship(
         "BillingHistory", back_populates="user", cascade="all, delete-orphan"
     )
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> origin/main
+>>>>>>> f4a61c9de3181091724c61d126cb113a3c69516f
 
 
 class Post(Base):
@@ -84,6 +107,10 @@ class Like(Base):
 
     post = relationship("Post", back_populates="likes")
     user = relationship("User", back_populates="likes")
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> f4a61c9de3181091724c61d126cb113a3c69516f
 
 
 class SubscriptionPlan(Base):
@@ -127,3 +154,8 @@ class BillingHistory(Base):
 
     user = relationship("User", back_populates="billing_history")
     plan = relationship("SubscriptionPlan", back_populates="billing_history")
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> origin/main
+>>>>>>> f4a61c9de3181091724c61d126cb113a3c69516f

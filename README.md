@@ -8,6 +8,7 @@ comments and likes.
 
 ---
 
+<<<<<<< HEAD
 ## 🆕 v4.0 — Email Notification System (likes & comments)
 
 | Requirement | Implementation |
@@ -149,6 +150,18 @@ to the same data, nothing more.
 
 ## 🆕 v3.0 additions (subscription plans, access control & billing)
 
+=======
+<<<<<<< HEAD
+## 🆕 v3.0 additions (subscription plans, access control & billing)
+
+> ⚠️ **Note on the task brief:** this task's wording mentions "Django Admin" /
+> "Django-based systems," but this entire project has been built in
+> **FastAPI**, not Django — there is no Django admin panel here. The
+> deliverables below use the FastAPI/Swagger equivalent instead: Swagger UI
+> for live testing, and SQLite table screenshots (via the VS Code SQLite
+> Viewer extension, same as before) in place of a Django admin screenshot.
+
+>>>>>>> f4a61c9de3181091724c61d126cb113a3c69516f
 | Feature | Where |
 |---|---|
 | `SubscriptionPlan` model | `app/models.py` — one row per plan (basic/premium/pro), seeded automatically at startup |
@@ -201,6 +214,11 @@ adding an extra model. This is called out again inline as a comment in
 
 ---
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> origin/main
+>>>>>>> f4a61c9de3181091724c61d126cb113a3c69516f
 ## 🆕 v2.0 additions (image upload + pagination/search)
 
 | Feature | Endpoint(s) |
@@ -281,6 +299,7 @@ it to send real emails.
 blog_api/
 ├── app/
 │   ├── main.py          # FastAPI app, includes all routers
+<<<<<<< HEAD
 │   ├── config.py         # .env-based settings (SMTP, secret key)
 │   ├── database.py        # SQLAlchemy engine/session (SQLite)
 │   ├── models.py           # User, Post, Comment, Like, SubscriptionPlan, BillingHistory
@@ -300,6 +319,19 @@ blog_api/
 │       ├── likes.py            # like/unlike (triggers email notification)
 │       └── subscriptions.py     # plans, subscribe, mine, billing-history
 ├── admin_panel/            # separate Django project — real Django Admin, same blog.db
+=======
+│   ├── database.py       # SQLAlchemy engine/session (SQLite)
+│   ├── models.py          # User, Post, Comment, Like tables
+│   ├── schemas.py         # Pydantic request/response models
+│   ├── security.py        # password hashing + JWT create/decode
+│   ├── deps.py             # get_current_user dependency
+│   ├── email_utils.py      # email notification helper
+│   └── routers/
+│       ├── auth.py          # /auth/register, /auth/login
+│       ├── posts.py          # CRUD + /posts/mine
+│       ├── comments.py        # add/list comments
+│       └── likes.py            # like/unlike
+>>>>>>> f4a61c9de3181091724c61d126cb113a3c69516f
 ├── requirements.txt
 ├── .env.example
 └── README.md

@@ -90,6 +90,10 @@ class PaginatedPosts(BaseModel):
     limit: int
     total_pages: int
     results: List[PostOut]
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> f4a61c9de3181091724c61d126cb113a3c69516f
 
 
 # ---------------------------------------------------------------------------
@@ -140,3 +144,8 @@ class MyPlanUsage(BaseModel):
 class MyPlanOut(BaseModel):
     plan: SubscriptionPlanOut
     usage: MyPlanUsage
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> origin/main
+>>>>>>> f4a61c9de3181091724c61d126cb113a3c69516f

@@ -9,7 +9,14 @@ from .. import models, schemas
 from ..database import get_db
 from ..deps import get_current_user
 from ..media_utils import delete_post_image, image_url_for, save_post_image
+<<<<<<< HEAD
 from ..plan_limits import enforce_image_limit, enforce_post_limit
+=======
+<<<<<<< HEAD
+from ..plan_limits import enforce_image_limit, enforce_post_limit
+=======
+>>>>>>> origin/main
+>>>>>>> f4a61c9de3181091724c61d126cb113a3c69516f
 
 router = APIRouter(prefix="/posts", tags=["Posts"])
 
@@ -54,11 +61,20 @@ def _create_post(
     db: Session = Depends(get_db),
     current_user: models.User = Depends(get_current_user),
 ):
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> f4a61c9de3181091724c61d126cb113a3c69516f
     # Plan-based access control: post count, and image count if attaching one.
     enforce_post_limit(db, current_user)
     if image is not None and image.filename:
         enforce_image_limit(db, current_user)
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> origin/main
+>>>>>>> f4a61c9de3181091724c61d126cb113a3c69516f
     image_path = save_post_image(image) if image is not None and image.filename else None
 
     post = models.Post(
@@ -200,10 +216,19 @@ def _update_post(
     if content is not None:
         post.content = content
     if image is not None and image.filename:
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> f4a61c9de3181091724c61d126cb113a3c69516f
         if post.image is None:
             # Only counts against the plan limit if this post didn't already
             # have an image - replacing an existing one isn't a net-new image.
             enforce_image_limit(db, current_user)
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> origin/main
+>>>>>>> f4a61c9de3181091724c61d126cb113a3c69516f
         new_path = save_post_image(image)
         delete_post_image(post.image)  # remove the old file, if any
         post.image = new_path

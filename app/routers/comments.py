@@ -6,8 +6,16 @@ from sqlalchemy.orm import Session
 from .. import models, schemas
 from ..database import get_db
 from ..deps import get_current_user
+<<<<<<< HEAD
 from ..services.notification_service import notify_post_author
 from ..plan_limits import enforce_comment_limit
+=======
+from ..email_utils import send_email_notification
+<<<<<<< HEAD
+from ..plan_limits import enforce_comment_limit
+=======
+>>>>>>> origin/main
+>>>>>>> f4a61c9de3181091724c61d126cb113a3c69516f
 
 router = APIRouter(prefix="/posts", tags=["Comments"])
 
@@ -29,8 +37,16 @@ def add_comment(
     if not post:
         raise HTTPException(status_code=404, detail="Post not found")
 
+<<<<<<< HEAD
     enforce_comment_limit(db, current_user)
 
+=======
+<<<<<<< HEAD
+    enforce_comment_limit(db, current_user)
+
+=======
+>>>>>>> origin/main
+>>>>>>> f4a61c9de3181091724c61d126cb113a3c69516f
     comment = models.Comment(
         post_id=post_id, user_id=current_user.id, text=comment_in.text
     )
@@ -38,6 +54,7 @@ def add_comment(
     db.commit()
     db.refresh(comment)
 
+<<<<<<< HEAD
     # Email the post's author (runs in the background, after the response).
     notify_post_author(
         background_tasks,
@@ -48,6 +65,16 @@ def add_comment(
         actor_name=current_user.username,
         actor_id=current_user.id,
     )
+=======
+    # Notify the post's author (unless they commented on their own post).
+    if post.author and post.author_id != current_user.id:
+        background_tasks.add_task(
+            send_email_notification,
+            post.author.email,
+            "New comment on your post",
+            f"{current_user.username} commented on '{post.title}': {comment_in.text}",
+        )
+>>>>>>> f4a61c9de3181091724c61d126cb113a3c69516f
 
     return schemas.CommentOut(
         id=comment.id,
