@@ -6,7 +6,10 @@ from sqlalchemy import (
     String,
     Text,
     Float,
+<<<<<<< HEAD
     Boolean,
+=======
+>>>>>>> 403a1134133178c9857fb7d9cd5b11da2db05a74
     ForeignKey,
     DateTime,
     UniqueConstraint,
@@ -39,12 +42,15 @@ class User(Base):
     billing_history = relationship(
         "BillingHistory", back_populates="user", cascade="all, delete-orphan"
     )
+<<<<<<< HEAD
     notifications = relationship(
         "Notification",
         back_populates="user",
         cascade="all, delete-orphan",
         foreign_keys="Notification.user_id",
     )
+=======
+>>>>>>> 403a1134133178c9857fb7d9cd5b11da2db05a74
 
 
 class Post(Base):
@@ -109,6 +115,7 @@ class PostView(Base):
     post = relationship("Post", back_populates="views")
 
 
+<<<<<<< HEAD
 class Notification(Base):
     """An in-app alert for a user (bell-icon notification center). Created
     automatically when someone likes/comments on the user's post, or when
@@ -127,6 +134,8 @@ class Notification(Base):
     user = relationship("User", back_populates="notifications", foreign_keys=[user_id])
 
 
+=======
+>>>>>>> 403a1134133178c9857fb7d9cd5b11da2db05a74
 class SubscriptionPlan(Base):
     """
     Catalog of the 3 fixed plans (basic / premium / pro). Seeded once at

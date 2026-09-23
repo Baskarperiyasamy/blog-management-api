@@ -1,4 +1,5 @@
 """
+<<<<<<< HEAD
 routers/notifications.py — two things live here:
 
   1. SMTP test/status helpers (unchanged, below) for checking your email
@@ -14,6 +15,15 @@ from sqlalchemy.orm import Session
 from .. import models, schemas
 from ..config import settings
 from ..database import get_db
+=======
+routers/notifications.py — a small helper endpoint to TEST your SMTP setup
+without having to create posts/comments first.
+"""
+from fastapi import APIRouter, Depends, HTTPException
+
+from .. import models
+from ..config import settings
+>>>>>>> 403a1134133178c9857fb7d9cd5b11da2db05a74
 from ..deps import get_current_user
 from ..services.email_service import send_email_strict
 from ..services.notification_service import build_comment_notification
@@ -47,6 +57,7 @@ def send_test_email(current_user: models.User = Depends(get_current_user)):
     except Exception as e:  # noqa: BLE001
         raise HTTPException(status_code=502, detail=f"{type(e).__name__}: {e}")
     return {"sent": True, "to": current_user.email}
+<<<<<<< HEAD
 
 
 # ---------------------------------------------------------------------------
@@ -130,3 +141,5 @@ def mark_all_notifications_read(
     )
     db.commit()
     return schemas.MarkAllReadOut(marked_read=updated)
+=======
+>>>>>>> 403a1134133178c9857fb7d9cd5b11da2db05a74

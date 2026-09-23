@@ -6,7 +6,11 @@ from sqlalchemy.orm import Session
 from .. import models, schemas
 from ..database import get_db
 from ..deps import get_current_user
+<<<<<<< HEAD
 from ..services.notification_service import notify_post_author, notify_post_author_in_app
+=======
+from ..services.notification_service import notify_post_author
+>>>>>>> 403a1134133178c9857fb7d9cd5b11da2db05a74
 from ..plan_limits import enforce_comment_limit
 
 router = APIRouter(prefix="/posts", tags=["Comments"])
@@ -35,6 +39,7 @@ def add_comment(
         post_id=post_id, user_id=current_user.id, text=comment_in.text
     )
     db.add(comment)
+<<<<<<< HEAD
 
     # In-app bell notification for the post's author (same row commit as the comment).
     notify_post_author_in_app(
@@ -47,6 +52,8 @@ def add_comment(
         actor_id=current_user.id,
     )
 
+=======
+>>>>>>> 403a1134133178c9857fb7d9cd5b11da2db05a74
     db.commit()
     db.refresh(comment)
 

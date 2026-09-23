@@ -170,6 +170,7 @@ class DashboardSummary(BaseModel):
     total_views: int
     per_post_stats: List[PostStat]
     activity_over_time: List[ActivityPoint]
+<<<<<<< HEAD
 
 
 # ---------------------------------------------------------------------------
@@ -198,3 +199,5 @@ class MarkReadOut(BaseModel):
 
 class MarkAllReadOut(BaseModel):
     marked_read: int
+=======
+>>>>>>> 403a1134133178c9857fb7d9cd5b11da2db05a74

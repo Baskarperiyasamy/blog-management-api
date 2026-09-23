@@ -10,7 +10,10 @@ from ..deps import get_current_user
 from ..invoice_utils import generate_invoice_pdf, generate_transaction_id
 from ..media_utils import image_url_for
 from ..plan_limits import get_active_plan
+<<<<<<< HEAD
 from ..services.notification_service import notify_subscription_activated_in_app
+=======
+>>>>>>> 403a1134133178c9857fb7d9cd5b11da2db05a74
 
 router = APIRouter(prefix="/subscriptions", tags=["Subscriptions"])
 
@@ -69,6 +72,7 @@ def subscribe(
     )
     db.add(billing)
 
+<<<<<<< HEAD
     # A renewal is "same plan the user already had"; anything else (first
     # subscription, or switching plans) counts as a fresh activation.
     is_renewal = current_user.plan_id == plan.id
@@ -84,6 +88,11 @@ def subscribe(
         is_renewal=is_renewal,
     )
 
+=======
+    # This becomes the user's new active plan.
+    current_user.plan_id = plan.id
+
+>>>>>>> 403a1134133178c9857fb7d9cd5b11da2db05a74
     db.commit()
     db.refresh(billing)
 

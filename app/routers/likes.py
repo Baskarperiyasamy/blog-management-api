@@ -4,7 +4,11 @@ from sqlalchemy.orm import Session
 from .. import models, schemas
 from ..database import get_db
 from ..deps import get_current_user
+<<<<<<< HEAD
 from ..services.notification_service import notify_post_author, notify_post_author_in_app
+=======
+from ..services.notification_service import notify_post_author
+>>>>>>> 403a1134133178c9857fb7d9cd5b11da2db05a74
 from ..plan_limits import enforce_like_limit
 
 router = APIRouter(prefix="/posts", tags=["Likes"])
@@ -37,6 +41,7 @@ def like_post(
 
     like = models.Like(post_id=post_id, user_id=current_user.id)
     db.add(like)
+<<<<<<< HEAD
 
     # In-app bell notification for the post's author (same row commit as the like).
     notify_post_author_in_app(
@@ -49,6 +54,8 @@ def like_post(
         actor_id=current_user.id,
     )
 
+=======
+>>>>>>> 403a1134133178c9857fb7d9cd5b11da2db05a74
     db.commit()
 
     # Email the post's author (runs in the background, after the response).

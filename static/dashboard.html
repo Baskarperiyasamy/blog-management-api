@@ -172,6 +172,7 @@
   .chart-panel.full { grid-column: 1 / -1; }
   canvas { max-height: 300px; }
   #empty-msg { display: none; color: var(--muted); padding: 40px 0; text-align: center; font-size: 14px; }
+<<<<<<< HEAD
 
   /* ---------------- Notification bell ---------------- */
   #bell-wrap { position: relative; }
@@ -243,6 +244,8 @@
     color: var(--muted); font-size: 13px;
     display: none;
   }
+=======
+>>>>>>> 403a1134133178c9857fb7d9cd5b11da2db05a74
 </style>
 </head>
 <body>
@@ -255,6 +258,7 @@
   <div id="auth-bar">
     <input id="token-input" type="password" placeholder="Paste your access token">
     <button id="load-btn">Load Dashboard</button>
+<<<<<<< HEAD
     <div id="bell-wrap">
       <button id="bell-btn" title="Notifications">
         🔔
@@ -269,6 +273,8 @@
         <div id="notif-empty">No notifications yet.</div>
       </div>
     </div>
+=======
+>>>>>>> 403a1134133178c9857fb7d9cd5b11da2db05a74
   </div>
 </header>
 
@@ -311,6 +317,10 @@
     </div>
   </div>
 </main>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 403a1134133178c9857fb7d9cd5b11da2db05a74
 <script>
 const API_BASE = window.location.origin;
 let barChart, pieChart, lineChart;
@@ -328,6 +338,7 @@ const savedToken = sessionStorage.getItem('dashboard_token');
 if (savedToken) {
   tokenInput.value = savedToken;
   loadDashboard();
+<<<<<<< HEAD
   loadNotifications();
 }
 
@@ -431,6 +442,10 @@ document.addEventListener('click', (e) => {
 
 setInterval(loadNotifications, 15000);
 
+=======
+}
+
+>>>>>>> 403a1134133178c9857fb7d9cd5b11da2db05a74
 async function loadDashboard() {
   const token = tokenInput.value.trim();
   if (!token) {

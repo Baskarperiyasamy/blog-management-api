@@ -1,5 +1,6 @@
 """
 services/notification_service.py — decides WHAT a notification says and
+<<<<<<< HEAD
 WHETHER it should be sent, for two channels:
 
   1. Email (via SMTP) — notify_post_author(), unchanged from before.
@@ -9,14 +10,26 @@ WHETHER it should be sent, for two channels:
 
 Both channels are independent — a call site can use one, the other, or
 both (see routers/likes.py, routers/comments.py, routers/subscriptions.py).
+=======
+WHETHER it should be sent. It does not talk to SMTP (email_service does) and
+does not touch the database.
+
+The main entry point, notify_post_author(), is called from the comment and
+like endpoints; it queues the email with FastAPI BackgroundTasks so the API
+response is never delayed.
+>>>>>>> 403a1134133178c9857fb7d9cd5b11da2db05a74
 """
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
 from fastapi import BackgroundTasks
+<<<<<<< HEAD
 from sqlalchemy.orm import Session
 
 from .. import models
+=======
+
+>>>>>>> 403a1134133178c9857fb7d9cd5b11da2db05a74
 from ..config import settings
 from .email_service import send_email
 
@@ -87,6 +100,7 @@ def notify_post_author(
 
     background_tasks.add_task(send_email, author_email, subject, body)
     return True
+<<<<<<< HEAD
 
 
 # ---------------------------------------------------------------------------
@@ -160,3 +174,5 @@ def notify_subscription_activated_in_app(
         message=message,
         notification_type="subscription",
     )
+=======
+>>>>>>> 403a1134133178c9857fb7d9cd5b11da2db05a74
