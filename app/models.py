@@ -22,12 +22,16 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String(50), unique=True, index=True, nullable=False)
     email = Column(String(120), unique=True, index=True, nullable=False)
+<<<<<<< HEAD
     # Nullable: social-login-only accounts (Google/Facebook) have no local
     # password - they authenticate entirely through Auth0.
     password = Column(String(255), nullable=True)  # stores the HASHED password
     auth_provider = Column(String(20), nullable=False, default="local")  # "local" | "google" | "facebook"
     auth0_sub = Column(String(120), unique=True, index=True, nullable=True)  # Auth0's stable user id, e.g. "google-oauth2|12345"
     avatar_url = Column(String(500), nullable=True)
+=======
+    password = Column(String(255), nullable=False)  # stores the HASHED password
+>>>>>>> 4bc8c0b2a9d01a4b783a740424ee0c3addbb7294
     plan_id = Column(Integer, ForeignKey("subscription_plans.id"), nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 

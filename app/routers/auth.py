@@ -4,7 +4,10 @@ from sqlalchemy.orm import Session
 
 from .. import models, schemas
 from ..database import get_db
+<<<<<<< HEAD
 from ..deps import get_current_user
+=======
+>>>>>>> 4bc8c0b2a9d01a4b783a740424ee0c3addbb7294
 from ..security import hash_password, verify_password, create_access_token
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
@@ -58,6 +61,7 @@ def login(
     token for you automatically for all subsequent requests.
     """
     user = db.query(models.User).filter(models.User.username == form_data.username).first()
+<<<<<<< HEAD
 
     if user and not user.password:
         raise HTTPException(
@@ -66,6 +70,8 @@ def login(
                    f"Please use 'Continue with {user.auth_provider.title()}' instead of a password.",
         )
 
+=======
+>>>>>>> 4bc8c0b2a9d01a4b783a740424ee0c3addbb7294
     if not user or not verify_password(form_data.password, user.password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -75,6 +81,7 @@ def login(
 
     access_token = create_access_token(data={"sub": str(user.id)})
     return {"access_token": access_token, "token_type": "bearer"}
+<<<<<<< HEAD
 
 
 @router.get("/me", response_model=schemas.UserOut)
@@ -83,3 +90,5 @@ def get_me(current_user: models.User = Depends(get_current_user)):
     login page (and any other page) to check who's signed in from just the
     saved JWT, without decoding it client-side."""
     return current_user
+=======
+>>>>>>> 4bc8c0b2a9d01a4b783a740424ee0c3addbb7294

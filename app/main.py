@@ -9,7 +9,11 @@ import os
 import logging
 
 from .config import settings
+<<<<<<< HEAD
 from .routers import auth, posts, comments, likes, subscriptions, notifications, dashboard, ai_support, social_auth
+=======
+from .routers import auth, posts, comments, likes, subscriptions, notifications, dashboard, ai_support
+>>>>>>> 4bc8c0b2a9d01a4b783a740424ee0c3addbb7294
 
 # Creates blog.db and all tables automatically on first run.
 Base.metadata.create_all(bind=engine)
@@ -88,7 +92,10 @@ app.include_router(subscriptions.router)
 app.include_router(notifications.router)
 app.include_router(dashboard.router)
 app.include_router(ai_support.router)
+<<<<<<< HEAD
 app.include_router(social_auth.router)
+=======
+>>>>>>> 4bc8c0b2a9d01a4b783a740424ee0c3addbb7294
 
 
 @app.get("/", tags=["Health"])

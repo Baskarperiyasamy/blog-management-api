@@ -63,6 +63,7 @@ class Settings:
     def openai_configured(self) -> bool:
         return bool(self.OPENAI_API_KEY)
 
+<<<<<<< HEAD
     # --- Auth0 (Google / Facebook social login) ---
     # Leave AUTH0_DOMAIN blank and the social login buttons will show a
     # clear "not configured" error instead of crashing - normal email/
@@ -79,6 +80,8 @@ class Settings:
     def auth0_configured(self) -> bool:
         return bool(self.AUTH0_DOMAIN and self.AUTH0_CLIENT_ID and self.AUTH0_CLIENT_SECRET)
 
+=======
+>>>>>>> 4bc8c0b2a9d01a4b783a740424ee0c3addbb7294
     @property
     def smtp_configured(self) -> bool:
         return bool(self.SMTP_HOST and self.SMTP_USERNAME and self.SMTP_PASSWORD)

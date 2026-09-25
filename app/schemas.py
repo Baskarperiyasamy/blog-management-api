@@ -19,15 +19,21 @@ class UserOut(BaseModel):
     id: int
     username: str
     email: EmailStr
+<<<<<<< HEAD
     auth_provider: str = "local"
     avatar_url: Optional[str] = None
+=======
+>>>>>>> 4bc8c0b2a9d01a4b783a740424ee0c3addbb7294
     created_at: datetime
 
 
 class Token(BaseModel):
     access_token: str
     token_type: str = "bearer"
+<<<<<<< HEAD
     user: Optional[UserOut] = None
+=======
+>>>>>>> 4bc8c0b2a9d01a4b783a740424ee0c3addbb7294
 
 
 # ---------------------------------------------------------------------------
