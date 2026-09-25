@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In — Blog Management API</title>
+<style>
+  :root {
+    --bg: #05060f;
+    --panel: rgba(24, 26, 51, .55);
+    --border: rgba(255,255,255,.08);
+    --text: #f4f5ff;
+    --muted: #8d90c4;
+    --neon-cyan: #23f0ff;
+    --neon-violet: #b370ff;
+    --neon-pink: #ff4fa3;
+    --neon-green: #4dffb0;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  body {
+    position: relative;
+    overflow-x: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  body::before, body::after {
+    content: '';
+    position: fixed;
+    width: 520px; height: 520px;
+    border-radius: 50%;
+    filter: blur(120px);
+    z-index: 0;
+    opacity: .35;
+    pointer-events: none;
+  }
+  body::before { background: var(--neon-violet); top: -180px; left: -120px; }
+  body::after { background: var(--neon-cyan); bottom: -220px; right: -140px; }
+
+  #card {
+    position: relative; z-index: 1;
+    width: 100%; max-width: 380px;
+    background: var(--panel);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 32px 30px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.4);
+  }
+  h1 {
+    margin: 0 0 4px;
+    font-size: 22px;
+    font-weight: 800;
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-violet));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  #subtitle { margin: 0 0 22px; color: var(--muted); font-size: 13px; }
+
+  #tabs { display: flex; gap: 6px; margin-bottom: 20px; background: rgba(255,255,255,.04); border-radius: 10px; padding: 4px; }
+  #tabs button {
+    flex: 1; background: none; border: none; color: var(--muted);
+    padding: 8px 0; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;
+  }
+  #tabs button.active { background: rgba(255,255,255,.08); color: var(--text); }
+
+  .form-panel { display: none; flex-direction: column; gap: 12px; }
+  .form-panel.active { display: flex; }
+
+  label { font-size: 12px; color: var(--muted); margin-bottom: -6px; }
+  input {
+    background: rgba(255,255,255,.05);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    width: 100%;
+  }
+  input:focus { outline: none; border-color: var(--neon-cyan); box-shadow: 0 0 12px rgba(35,240,255,.25); }
+
+  .primary-btn {
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-violet));
+    color: #05060f; border: none; border-radius: 8px;
+    padding: 11px 0; font-weight: 800; font-size: 13px; cursor: pointer;
+    margin-top: 4px;
+  }
+  .primary-btn:hover { filter: brightness(1.1); }
+  .primary-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+  #divider { display: flex; align-items: center; gap: 10px; margin: 20px 0 14px; color: var(--muted); font-size: 11px; }
+  #divider::before, #divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .social-btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    width: 100%; padding: 10px 0; border-radius: 8px; font-size: 13px; font-weight: 600;
+    cursor: pointer; border: 1px solid var(--border); margin-bottom: 10px;
+    background: rgba(255,255,255,.04); color: var(--text);
+  }
+  .social-btn:hover { background: rgba(255,255,255,.08); }
+  .social-btn .icon { width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; border-radius: 4px; }
+  .social-btn.google .icon { color: #4285F4; }
+  .social-btn.facebook .icon { color: #1877F2; }
+
+  #status {
+    font-size: 12.5px; padding: 9px 12px; border-radius: 8px; margin-bottom: 14px;
+    display: none;
+  }
+  #status.error { display: block; background: rgba(255,79,163,.12); color: var(--neon-pink); border: 1px solid rgba(255,79,163,.3); }
+  #status.success { display: block; background: rgba(77,255,176,.12); color: var(--neon-green); border: 1px solid rgba(77,255,176,.3); }
+
+  #signed-in-view { display: none; text-align: center; }
+  #signed-in-view p { color: var(--muted); font-size: 13px; }
+  #signed-in-view .username { color: var(--text); font-weight: 700; }
+  #go-dashboard-btn { margin-top: 14px; }
+</style>
+</head>
+<body>
+
+<div id="card">
+  <h1>Blog Management API</h1>
+  <p id="subtitle">Sign in to continue</p>
+
+  <div id="status"></div>
+
+  <div id="auth-forms">
+    <div id="tabs">
+      <button id="tab-login" class="active">Log In</button>
+      <button id="tab-signup">Sign Up</button>
+    </div>
+
+    <div id="panel-login" class="form-panel active">
+      <label for="login-username">Username</label>
+      <input id="login-username" type="text" placeholder="yourusername" autocomplete="username">
+      <label for="login-password">Password</label>
+      <input id="login-password" type="password" placeholder="••••••••" autocomplete="current-password">
+      <button id="login-btn" class="primary-btn">Log In</button>
+    </div>
+
+    <div id="panel-signup" class="form-panel">
+      <label for="signup-username">Username</label>
+      <input id="signup-username" type="text" placeholder="yourusername" autocomplete="username">
+      <label for="signup-email">Email</label>
+      <input id="signup-email" type="email" placeholder="you@example.com" autocomplete="email">
+      <label for="signup-password">Password</label>
+      <input id="signup-password" type="password" placeholder="At least 6 characters" autocomplete="new-password">
+      <button id="signup-btn" class="primary-btn">Create Account</button>
+    </div>
+
+    <div id="divider">OR CONTINUE WITH</div>
+
+    <button id="google-btn" class="social-btn google">
+      <span class="icon">G</span> Continue with Google
+    </button>
+    <button id="facebook-btn" class="social-btn facebook">
+      <span class="icon">f</span> Continue with Facebook
+    </button>
+  </div>
+
+  <div id="signed-in-view">
+    <p>Signed in as <span class="username" id="signed-in-username"></span></p>
+    <button id="go-dashboard-btn" class="primary-btn">Go to Dashboard</button>
+    <button id="logout-btn" class="social-btn" style="margin-top:8px;">Log Out</button>
+  </div>
+</div>
+
+<script>
+const API_BASE = window.location.origin;
+const DASHBOARD_URL = `${API_BASE}/static/dashboard.html`;
+
+const statusEl = document.getElementById('status');
+const authForms = document.getElementById('auth-forms');
+const signedInView = document.getElementById('signed-in-view');
+
+function showStatus(message, type) {
+  statusEl.textContent = message;
+  statusEl.className = type; // 'error' or 'success'
+}
+
+function clearStatus() {
+  statusEl.className = '';
+  statusEl.textContent = '';
+}
+
+// ---------------- Tabs ----------------
+const tabLogin = document.getElementById('tab-login');
+const tabSignup = document.getElementById('tab-signup');
+const panelLogin = document.getElementById('panel-login');
+const panelSignup = document.getElementById('panel-signup');
+
+tabLogin.addEventListener('click', () => {
+  tabLogin.classList.add('active'); tabSignup.classList.remove('active');
+  panelLogin.classList.add('active'); panelSignup.classList.remove('active');
+  clearStatus();
+});
+tabSignup.addEventListener('click', () => {
+  tabSignup.classList.add('active'); tabLogin.classList.remove('active');
+  panelSignup.classList.add('active'); panelLogin.classList.remove('active');
+  clearStatus();
+});
+
+// ---------------- Email/password login ----------------
+document.getElementById('login-btn').addEventListener('click', async () => {
+  const username = document.getElementById('login-username').value.trim();
+  const password = document.getElementById('login-password').value;
+  if (!username || !password) { showStatus('Enter both username and password.', 'error'); return; }
+
+  clearStatus();
+  try {
+    const res = await fetch(`${API_BASE}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ grant_type: 'password', username, password })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || 'Login failed');
+
+    sessionStorage.setItem('dashboard_token', data.access_token);
+    showSignedIn(username);
+  } catch (err) {
+    showStatus(err.message, 'error');
+  }
+});
+
+// ---------------- Email/password signup ----------------
+document.getElementById('signup-btn').addEventListener('click', async () => {
+  const username = document.getElementById('signup-username').value.trim();
+  const email = document.getElementById('signup-email').value.trim();
+  const password = document.getElementById('signup-password').value;
+  if (!username || !email || !password) { showStatus('Fill in all fields.', 'error'); return; }
+  if (password.length < 6) { showStatus('Password must be at least 6 characters.', 'error'); return; }
+
+  clearStatus();
+  try {
+    const res = await fetch(`${API_BASE}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, email, password })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || 'Signup failed');
+
+    showStatus('Account created! Logging you in...', 'success');
+    // Auto-login right after signup for a smooth flow.
+    const loginRes = await fetch(`${API_BASE}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ grant_type: 'password', username, password })
+    });
+    const loginData = await loginRes.json();
+    if (!loginRes.ok) throw new Error(loginData.detail || 'Login after signup failed');
+
+    sessionStorage.setItem('dashboard_token', loginData.access_token);
+    showSignedIn(username);
+  } catch (err) {
+    showStatus(err.message, 'error');
+  }
+});
+
+// ---------------- Social login buttons ----------------
+document.getElementById('google-btn').addEventListener('click', () => {
+  window.location.href = `${API_BASE}/auth/login/google`;
+});
+document.getElementById('facebook-btn').addEventListener('click', () => {
+  window.location.href = `${API_BASE}/auth/login/facebook`;
+});
+
+// ---------------- Signed-in view ----------------
+function showSignedIn(username) {
+  authForms.style.display = 'none';
+  signedInView.style.display = 'block';
+  document.getElementById('signed-in-username').textContent = username;
+}
+
+document.getElementById('go-dashboard-btn').addEventListener('click', () => {
+  window.location.href = DASHBOARD_URL;
+});
+
+document.getElementById('logout-btn').addEventListener('click', () => {
+  sessionStorage.removeItem('dashboard_token');
+  signedInView.style.display = 'none';
+  authForms.style.display = 'block';
+  clearStatus();
+});
+
+// ---------------- Handle the return trip from Auth0 (#token=...) ----------------
+function handleAuthCallback() {
+  // Errors come back as a query param (?auth_error=...).
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('auth_error')) {
+    showStatus(params.get('auth_error'), 'error');
+    // Clean the URL so refreshing doesn't re-show the same error.
+    window.history.replaceState({}, '', window.location.pathname);
+    return;
+  }
+
+  // Success comes back as a URL fragment (#token=...&username=...) so the
+  // JWT never gets logged in server access logs or browser history.
+  if (window.location.hash.startsWith('#token=')) {
+    const hashParams = new URLSearchParams(window.location.hash.slice(1));
+    const token = hashParams.get('token');
+    const username = hashParams.get('username');
+    if (token) {
+      sessionStorage.setItem('dashboard_token', token);
+      window.history.replaceState({}, '', window.location.pathname);
+      showSignedIn(username || 'there');
+      return;
+    }
+  }
+
+  // No callback data - if a token is already saved from earlier, look up who it belongs to.
+  const savedToken = sessionStorage.getItem('dashboard_token');
+  if (savedToken) {
+    fetch(`${API_BASE}/auth/me`, { headers: { Authorization: `Bearer ${savedToken}` } })
+      .then(res => res.ok ? res.json() : Promise.reject())
+      .then(user => showSignedIn(user.username))
+      .catch(() => sessionStorage.removeItem('dashboard_token')); // stale/expired token
+  }
+}
+
+handleAuthCallback();
+</script>
+
+</body>
+</html>
